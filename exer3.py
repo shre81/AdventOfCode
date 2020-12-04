@@ -71,4 +71,45 @@ for i in range(treeArrexp.shape[0]):
             #print ("no trees at:", i,j)
             nonTreeCnt += 1
 
-print (treeCnt, nonTreeCnt)
+#print (treeCnt, nonTreeCnt)
+
+#Part 2 - for differnt slopes
+
+slopeLst = [[1,1], [1,3], [1,5], [1,7], [2,1]]
+treeArrexp = np.pad(treeArr, [(0, 0), (0, 5000)], 'wrap')
+slopeCnt = []
+
+for idx, items in enumerate(slopeLst):
+    treeArrChk = np.array(treeArrexp, copy=True)
+    print (treeArrChk.shape, np.count_nonzero(treeArrChk))
+    i=0
+    j=0
+    oldI=0
+    oldJ=0
+    while (i <= treeArrChk.shape[0]):
+        i = oldI + items[0] # i = 0, 1, 2,
+        j = oldJ + items[1] # j = 0, 3, 6
+        oldI = i
+        oldJ = j
+        #print (i, j, treeArrexp[i, j])
+        try:
+            treeArrChk[i,j] += 5
+        except:
+            #print ("reached end")
+            exit
+    
+    treeCnt = 0
+    nonTreeCnt = 0 
+    for i in range(treeArrChk.shape[0]):
+        for j in range(treeArrChk.shape[1]):
+            if treeArrChk[i,j] == 6:
+                #print ("trees at:", i,j)
+                treeCnt += 1
+            elif treeArrChk[i,j] ==  5:
+                #print ("no trees at:", i,j)
+                nonTreeCnt += 1
+    
+    slopeCnt.append((treeCnt, nonTreeCnt))
+
+print (slopeCnt)
+
