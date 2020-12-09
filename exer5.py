@@ -49,4 +49,4 @@ print (sIdDct[maxIdx])
 #part 2
 
 seatIDLst = list(sIdDct.values())
-print(sorted(seatIDLst))
+print(sorted(seatIDLst)) 
