@@ -3,12 +3,13 @@ import itertools
 import re
 import numpy as np
 
-f = open("input7.txt", "r")
+#f = open("input7.txt", "r")
+f = open("input7-test.txt", "r")
 
 #remove new line chars
 temp = f.read().split("\n")
 
-print (temp[0])
+#print (temp[0])
 
 samStr = temp[0]
 sliced = temp[0:10]
@@ -20,7 +21,7 @@ secSplitCln = [((items.strip(".")).replace("bags", "bag")).lstrip() for items in
 
 firSplitCln = (firSplit[0].strip()).replace("bags", "bag")
 
-print (firSplitCln, secSplitCln)
+#print (firSplitCln, secSplitCln)
 
 mastDct = {}
 for items in temp:
@@ -28,7 +29,7 @@ for items in temp:
     try:
         secSplit = firSplit[1].split(",")
     except:
-        print ("error at ", items)
+        #print ("error at ", items)
         continue
     
     secSplitCln = [((items.strip(".")).replace("bags", "bag")).lstrip() for items in secSplit]
@@ -36,8 +37,9 @@ for items in temp:
 
     mastDct[firSplitCln] = secSplitCln
 
-print (len(mastDct), len(temp), mastDct['drab maroon bag'])
+#print (len(mastDct), len(temp), mastDct['drab maroon bag'])
 
+'''
 firLevDct = {}
 idx = 0
 for k,v in mastDct.items():
@@ -137,3 +139,127 @@ print (len(eigLevDct))
 chkInt = set(list(firLevDct.values())) | set(list(secLevDct.values())) | set(list(thiLevDct.values())) | set(list(fouLevDct.values())) | set(list(fivLevDct.values())) | set(list(sixLevDct.values())) | set(list(sevLevDct.values())) | set(list(eigLevDct.values())) 
 
 print (len(chkInt))
+'''
+
+#part 2 
+
+firNstDct = {}
+for k,v in mastDct.items():
+    if ('shiny gold bag') in k:
+        for items in v:
+            firNstDct[items[2:]] = int(items[0:1])
+
+print (len(firNstDct), firNstDct)
+
+masterDct = firNstDct.copy()
+
+secNstDct = {}
+for ke, va in firNstDct.items():
+    for k, v in mastDct.items():
+        if ke in k:
+            for items in v:
+                secNstDct[items[2:]] = int(items[0:1])
+                masterDct[ke + '-' + items[2:]] = int(items[0:1])
+
+print (len(secNstDct), len(masterDct), secNstDct)
+
+thiNstDct = {}
+for ke, va in secNstDct.items():
+    for k, v in mastDct.items():
+        if ke in k:
+            for items in v:
+                if 'no other bag' in items:
+                    thiNstDct[items] = 0
+                    masterDct[ke + '-' + items] = 0
+                else:
+                    thiNstDct[items[2:]] = int(items[0:1])
+                    masterDct[ke + '-' + items[2:]] = int(items[0:1])
+
+print (len(thiNstDct), len(masterDct), thiNstDct)
+
+fouNstDct = {}
+for ke, va in thiNstDct.items():
+    for k, v in mastDct.items():
+        if ke in k:
+            for items in v:
+                if 'no other bag' in items:
+                    fouNstDct[items] = 0
+                    masterDct[ke + '-' + items] = 0
+                else:
+                    fouNstDct[items[2:]] = int(items[0:1])
+                    masterDct[ke + '-' + items[2:]] = int(items[0:1])
+
+print (len(fouNstDct), len(masterDct), fouNstDct)
+
+fivNstDct = {}
+for ke, va in fouNstDct.items():
+    for k, v in mastDct.items():
+        if ke in k:
+            for items in v:
+                if 'no other bag' in items:
+                    fivNstDct[items] = 0
+                    masterDct[ke + '-' + items] = 0
+                else:
+                    fivNstDct[items[2:]] = int(items[0:1])
+                    masterDct[ke + '-' + items[2:]] = int(items[0:1])
+
+print (len(fivNstDct), len(masterDct), fivNstDct)
+
+sixNstDct = {}
+for ke, va in fivNstDct.items():
+    for k, v in mastDct.items():
+        if ke in k:
+            for items in v:
+                if 'no other bag' in items:
+                    sixNstDct[items] = 0
+                    masterDct[ke + '-' + items] = 0
+                else:
+                    sixNstDct[items[2:]] = int(items[0:1])
+                    masterDct[ke + '-' + items[2:]] = int(items[0:1])
+
+print (len(sixNstDct), len(masterDct), sixNstDct)
+
+sevNstDct = {}
+for ke, va in sixNstDct.items():
+    for k, v in mastDct.items():
+        if ke in k:
+            for items in v:
+                if 'no other bag' in items:
+                    sevNstDct[items] = 0
+                    masterDct[ke + '-' + items] = 0
+                else:
+                    sevNstDct[items[2:]] = int(items[0:1])
+                    masterDct[ke + '-' + items[2:]] = int(items[0:1])
+
+print (len(sevNstDct), sevNstDct, len(masterDct))
+
+#print (mastDct['drab maroon bag'])
+megaDct = masterDct.copy()
+teraDct = masterDct.copy()
+
+for k, v in masterDct.items():
+    for mek, mev in megaDct.items():
+        try:
+            if (k.split('-')[1] == mek.split('-')[0]) and not(mek.split('-')[1] == 'no other bag'):
+                newKey = k + '-' + mek.split('-')[1]
+                newVal = v * mev
+                if newKey.split('-')[0] in firNstDct.keys():
+                    #print (newKey, newVal)
+                    teraDct[newKey] = newVal
+            elif (k.split('-')[1] == mek.split('-')[0]) and (mek.split('-')[1] == 'no other bag'):
+                newKey = k + '-' + mek.split('-')[1]
+                newVal = v * 1
+                if newKey.split('-')[0] in firNstDct.keys():
+                    #print (newKey, newVal)
+                    teraDct[newKey] = newVal
+        except:
+            continue
+'''
+for k, v in firNstDct.items():
+    for ke, ve in masterDct.items():
+        if k in ke:
+            print (ke, ve)
+'''
+print ("printing master list below: ")
+for k, v in teraDct.items():
+    print (k,v)
