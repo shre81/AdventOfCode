@@ -4,8 +4,8 @@ import re
 import numpy as np
 
 #f = open("input7.txt", "r")
-#f = open("input10-test.txt", "r")
-f = open("input10.txt", "r")
+f = open("input10-test.txt", "r")
+#f = open("input10.txt", "r")
 
 #remove new line chars
 temp = f.read().split("\n")
@@ -36,7 +36,7 @@ while (idx <= len(mastLst)):
         for Mitems in mastLst:
             if (items == Mitems):
                 diffLst.append((Mitems, (Mitems-currVolt)))
-                #print (diffLst)
+                print (diffLst)
     if (diffLst):
         selItem = (min(diffLst, key = lambda t: t[1]))[0]
         volDiff = (min(diffLst, key = lambda t: t[1]))[1]
@@ -50,4 +50,28 @@ while (idx <= len(mastLst)):
 
 print (len(oneJoltLst), len(threeJoltLst), len(mastLst))
 
-print (75*33)
+#print (75*33)
+
+
+#part 2
+
+startVolt = 0
+currVolt = startVolt
+oneJoltLst = []
+threeJoltLst = []
+idx = 0
+while (idx <= len(mastLst)):
+    diffLst = []
+    for aitems in mastLst:
+    #print (idx, currVolt)
+        minLst = [currVolt+1, currVolt+2, currVolt+3]
+        for items in minLst:
+            for Mitems in mastLst:
+                if (items == Mitems):
+                    diffLst.append((Mitems, (Mitems-currVolt)))
+        for diffs in diffLst:
+            selItem = diffs[0]
+            currVol = diffs[1]
+        idx = idx + 1
+
+#print (len(mastLst))
