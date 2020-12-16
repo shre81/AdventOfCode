@@ -89,10 +89,83 @@ for ctr in range(1,1000):
     if ((treeArr==modArr).all()):
         print ('no more changes after loop: ', ctr)
         unique, counts = np.unique(modArr, return_counts=True)
-        #print (dict(zip(unique, counts)))
-        print ('number of occupied seats is: ', dict(zip(unique, counts)))
+        print (dict(zip(unique, counts)))
+        #print ('number of occupied seats is: ', dict(zip(unique, counts)))
         break
     treeArr = np.array(modArr, copy=True)
     #print (ctr, treeArr, modArr)
 
 #Part 2
+
+treeArr = np.array(lstofLst)
+
+for ctr in range(1, 10):
+    modArr = np.array(treeArr, copy=True)
+    for i in range(treeArr.shape[0]):
+        for j in range(treeArr.shape[1]):
+            chkLst = []
+            for chkI in range(-treeArr.shape[0], treeArr.shape[0]):
+                rowI = i + chkI
+                rowJ = j
+                if not((rowI == i) and (rowJ == j)):
+                    chkLst.append((rowI, rowJ))
+            for chkJ in range(-treeArr.shape[1], treeArr.shape[1]):
+                colI = i
+                colJ = j + chkJ
+                if not((colI == i) and (colJ == j)):
+                    chkLst.append((colI, colJ))
+            for chkI in range(-treeArr.shape[0], treeArr.shape[0]):
+                for chkJ in range(-treeArr.shape[1], treeArr.shape[1]):
+                    if (abs(chkI)==abs(chkJ)):
+                        diaI = i + chkI
+                        diaJ = j + chkJ
+                        if not((diaI == i) and (diaJ == j)):
+                            chkLst.append((diaI, diaJ))
+            
+            if ctr == 1:
+                print (chkLst)
+            
+            if (treeArr[i,j] == 0):
+                emptySeat = 1
+                for items in chkLst:
+                    adjI = i + items[0]
+                    adjJ = j + items[1]
+                    if (adjI >= 0) and (adjJ >= 0):
+                        try:
+                            if (treeArr[adjI,adjJ] == 1):
+                                emptySeat = 0
+                        except:
+                            continue
+                    else:
+                        #print ('boundaries crossed')
+                        continue
+                if (emptySeat == 1):
+                    #print ('occupying this seat at: ', adjI, adjJ)
+                    modArr[i,j] = 1
+            
+            if (treeArr[i,j] == 1):
+                occSeat=[]
+                for items in chkLst:
+                    adjI = i + items[0]
+                    adjJ = j + items[1]
+                    if (adjI >= 0) and (adjJ >= 0):
+                        try:
+                            if (treeArr[adjI,adjJ] == 1):
+                                occSeat.append((1, adjI, adjJ))
+                        except:
+                            continue
+                    else:
+                        #print ('boundaries crossed')
+                        continue
+                #print (occSeat, i, j, ctr, treeArr[-1,-1])
+                if (len(occSeat) >= 5):
+                    modArr[i,j] = 0
+    
+    if ((treeArr==modArr).all()):
+        print ('no more changes after loop: ', ctr)
+        unique, counts = np.unique(modArr, return_counts=True)
+        #print (dict(zip(unique, counts)))
+        print ('number of occupied seats is: ', dict(zip(unique, counts)))
+        break
+    
+    treeArr = np.array(modArr, copy=True)
