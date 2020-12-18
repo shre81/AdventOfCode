@@ -96,32 +96,51 @@ for ctr in range(1,1000):
     #print (ctr, treeArr, modArr)
 
 #Part 2
+<<<<<<< HEAD
 
 treeArr = np.array(lstofLst)
 
+=======
+
+treeArr = np.array(lstofLst)
+
+>>>>>>> ab8338c3cfd3c85f52404e34477ac4624497e5e6
 for ctr in range(1, 10):
     modArr = np.array(treeArr, copy=True)
     for i in range(treeArr.shape[0]):
         for j in range(treeArr.shape[1]):
+<<<<<<< HEAD
             cLst = []
             rLst = []
             dLst = []
+=======
+            chkLst = []
+>>>>>>> ab8338c3cfd3c85f52404e34477ac4624497e5e6
             for chkI in range(-treeArr.shape[0], treeArr.shape[0]):
                 rowI = i + chkI
                 rowJ = j
                 if not((rowI == i) and (rowJ == j)):
+<<<<<<< HEAD
                     rLst.append((rowI, rowJ))
+=======
+                    chkLst.append((rowI, rowJ))
+>>>>>>> ab8338c3cfd3c85f52404e34477ac4624497e5e6
             for chkJ in range(-treeArr.shape[1], treeArr.shape[1]):
                 colI = i
                 colJ = j + chkJ
                 if not((colI == i) and (colJ == j)):
+<<<<<<< HEAD
                     cLst.append((colI, colJ))
+=======
+                    chkLst.append((colI, colJ))
+>>>>>>> ab8338c3cfd3c85f52404e34477ac4624497e5e6
             for chkI in range(-treeArr.shape[0], treeArr.shape[0]):
                 for chkJ in range(-treeArr.shape[1], treeArr.shape[1]):
                     if (abs(chkI)==abs(chkJ)):
                         diaI = i + chkI
                         diaJ = j + chkJ
                         if not((diaI == i) and (diaJ == j)):
+<<<<<<< HEAD
                             dLst.append((diaI, diaJ))
             
             if (ctr == 2) and (i==0) and (j==0):
@@ -135,6 +154,21 @@ for ctr in range(1, 10):
                             if (treeArr[items[0], items[1]])==1:
                                 
 
+=======
+                            chkLst.append((diaI, diaJ))
+            
+            if ctr == 1:
+                print (chkLst)
+            
+            if (treeArr[i,j] == 0):
+                emptySeat = 1
+                for items in chkLst:
+                    adjI = i + items[0]
+                    adjJ = j + items[1]
+                    if (adjI >= 0) and (adjJ >= 0):
+                        try:
+                            if (treeArr[adjI,adjJ] == 1):
+>>>>>>> ab8338c3cfd3c85f52404e34477ac4624497e5e6
                                 emptySeat = 0
                         except:
                             continue
@@ -150,7 +184,11 @@ for ctr in range(1, 10):
                 for items in chkLst:
                     adjI = i + items[0]
                     adjJ = j + items[1]
+<<<<<<< HEAD
                     if (0 <= adjI <= treeArr.shape[0]) and (0 <= adjJ <= treeArr.shape[1]):
+=======
+                    if (adjI >= 0) and (adjJ >= 0):
+>>>>>>> ab8338c3cfd3c85f52404e34477ac4624497e5e6
                         try:
                             if (treeArr[adjI,adjJ] == 1):
                                 occSeat.append((1, adjI, adjJ))
@@ -168,7 +206,13 @@ for ctr in range(1, 10):
         unique, counts = np.unique(modArr, return_counts=True)
         #print (dict(zip(unique, counts)))
         print ('number of occupied seats is: ', dict(zip(unique, counts)))
+<<<<<<< HEAD
         print (modArr)
         break
     
     treeArr = np.array(modArr, copy=True)
+=======
+        break
+    
+    treeArr = np.array(modArr, copy=True)
+>>>>>>> ab8338c3cfd3c85f52404e34477ac4624497e5e6
