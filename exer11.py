@@ -4,6 +4,7 @@ import re
 import numpy as np
 
 f = open("input11-test.txt", "r")
+#f = open("input11.txt", "r")
 
 #remove new line chars
 temp = f.read().splitlines()
@@ -46,72 +47,128 @@ adjArr = [
     (-1, 0)
     ]
 
-modArr = np.array(treeArr, copy=True)
-
-for i in range(treeArr.shape[0]):
-    for j in range(treeArr.shape[1]):
-        if (treeArr[i,j] == 0):
-            emptySeat=1
-            for items in adjArr:
-                adjI = i + items[0]
-                adjJ = j + items[1]
-                try:
-                    if (treeArr[adjI,adjJ] == 1):
-                        emptySeat = 0
-                except:
-                    print ('boundaries crossed')
-                    continue
-            if (emptySeat == 1):
-                modArr[i,j] = 1
-        elif (treeArr[i,j] == 1):
-            occSeat=[]
-            for items in adjArr:
-                adjI = i + items[0]
-                adjJ = j + items[1]
-                try:
-                    if (treeArr[adjI,adjJ] == 1):
-                        occSeat.append(1)
-                except:
-                    print ('boundaries crossed')
-                    continue
-            if (len(occSeat) >= 4):
-                modArr[i,j] = 0
-
-while not((modArr == treeArr).all()):
-    treeArr = np.array(modArr, copy = True)
-    for i in range(modArr.shape[0]):
-        for j in range(modArr.shape[1]):
-            if (modArr[i,j] == 0):
-                emptySeat=1
+for ctr in range(1,1000):
+    modArr = np.array(treeArr, copy=True)
+    for i in range(treeArr.shape[0]):
+        for j in range(treeArr.shape[1]):
+            if (treeArr[i,j] == 0):
+                emptySeat = 1
                 for items in adjArr:
                     adjI = i + items[0]
                     adjJ = j + items[1]
-                    try:
-                        if (modArr[adjI,adjJ] == 1):
-                            emptySeat = 0
-                    except:
-                        print ('boundaries crossed')
+                    if (adjI >= 0) and (adjJ >= 0):
+                        try:
+                            if (treeArr[adjI,adjJ] == 1):
+                                emptySeat = 0
+                        except:
+                            continue
+                    else:
+                        #print ('boundaries crossed')
                         continue
                 if (emptySeat == 1):
-                    treeArr[i,j] = 1
-            elif (modArr[i,j] == 1):
+                    #print ('occupying this seat at: ', adjI, adjJ)
+                    modArr[i,j] = 1
+            if (treeArr[i,j] == 1):
                 occSeat=[]
                 for items in adjArr:
                     adjI = i + items[0]
                     adjJ = j + items[1]
-                    try:
-                        if (modArr[adjI,adjJ] == 1):
-                            occSeat.append(1)
-                    except:
-                        print ('boundaries crossed')
+                    if (adjI >= 0) and (adjJ >= 0):
+                        try:
+                            if (treeArr[adjI,adjJ] == 1):
+                                occSeat.append((1, adjI, adjJ))
+                        except:
+                            continue
+                    else:
+                        #print ('boundaries crossed')
                         continue
+                #print (occSeat, i, j, ctr, treeArr[-1,-1])
                 if (len(occSeat) >= 4):
-                    treeArr[i,j] = 0
-else:
-    print (modArr, treeArr)
+                    modArr[i,j] = 0
+    
+    if ((treeArr==modArr).all()):
+        print ('no more changes after loop: ', ctr)
+        unique, counts = np.unique(modArr, return_counts=True)
+        print (dict(zip(unique, counts)))
+        #print ('number of occupied seats is: ', dict(zip(unique, counts)))
+        break
+    treeArr = np.array(modArr, copy=True)
+    #print (ctr, treeArr, modArr)
 
+#Part 2
 
+treeArr = np.array(lstofLst)
 
-print (modArr)
-                
+for ctr in range(1, 10):
+    modArr = np.array(treeArr, copy=True)
+    for i in range(treeArr.shape[0]):
+        for j in range(treeArr.shape[1]):
+            cLst = []
+            rLst = []
+            dLst = []
+            for chkI in range(-treeArr.shape[0], treeArr.shape[0]):
+                rowI = i + chkI
+                rowJ = j
+                if not((rowI == i) and (rowJ == j)):
+                    rLst.append((rowI, rowJ))
+            for chkJ in range(-treeArr.shape[1], treeArr.shape[1]):
+                colI = i
+                colJ = j + chkJ
+                if not((colI == i) and (colJ == j)):
+                    cLst.append((colI, colJ))
+            for chkI in range(-treeArr.shape[0], treeArr.shape[0]):
+                for chkJ in range(-treeArr.shape[1], treeArr.shape[1]):
+                    if (abs(chkI)==abs(chkJ)):
+                        diaI = i + chkI
+                        diaJ = j + chkJ
+                        if not((diaI == i) and (diaJ == j)):
+                            dLst.append((diaI, diaJ))
+            
+            if (ctr == 2) and (i==0) and (j==0):
+                print (chkLst, treeArr[i,j])
+            
+            if (treeArr[i,j] == 0): 
+                emptySeat = 1
+                for items in rLst:
+                    if (0 <= items[0] <= treeArr.shape[0]) and (0 <= items[1] <= treeArr.shape[1]):
+                        try:
+                            if (treeArr[items[0], items[1]])==1:
+                                
 
+                                emptySeat = 0
+                        except:
+                            continue
+                    else:
+                        #print ('boundaries crossed')
+                        continue
+                if (emptySeat == 1):
+                    #print ('occupying this seat at: ', adjI, adjJ)
+                    modArr[i,j] = 1
+            
+            if (treeArr[i,j] == 1):
+                occSeat=[]
+                for items in chkLst:
+                    adjI = i + items[0]
+                    adjJ = j + items[1]
+                    if (0 <= adjI <= treeArr.shape[0]) and (0 <= adjJ <= treeArr.shape[1]):
+                        try:
+                            if (treeArr[adjI,adjJ] == 1):
+                                occSeat.append((1, adjI, adjJ))
+                        except:
+                            continue
+                    else:
+                        #print ('boundaries crossed')
+                        continue
+                #print (occSeat, i, j, ctr, treeArr[-1,-1])
+                if (len(occSeat) >= 5):
+                    modArr[i,j] = 0
+    
+    if ((treeArr==modArr).all()):
+        print ('no more changes after loop: ', ctr)
+        unique, counts = np.unique(modArr, return_counts=True)
+        #print (dict(zip(unique, counts)))
+        print ('number of occupied seats is: ', dict(zip(unique, counts)))
+        print (modArr)
+        break
+    
+    treeArr = np.array(modArr, copy=True)
