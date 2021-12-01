@@ -1,6 +1,6 @@
 import os
 
-""" f = open("input-1-test", "r")
+f = open("input-1-test", "r")
 #f = open("input-1", "r")
 
 bigLst = []
@@ -21,7 +21,7 @@ for idx, msrm in enumerate(bigLst):
     else:
         continue
 
-print (len(incDecDct)) """
+print (len(incDecDct))
 
 # Part 2
 
