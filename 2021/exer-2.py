@@ -3,6 +3,9 @@ import os
 #f = open("input-2-test", "r")
 f = open("input-2", "r")
 
+bigLst = f.read().splitlines()
+print (bigLst)
+
 bigDct = {}
 ctr = 0
 for items in f:
