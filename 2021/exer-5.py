@@ -48,6 +48,7 @@ print (len(linDct))
 linCtr = 0
 diagCtr = 0
 notALine = []
+
 for k,v in linDct.items():
     if (v[0][0] == v[1][0]):
         linCtr += 1
