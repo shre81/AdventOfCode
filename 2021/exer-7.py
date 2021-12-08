@@ -14,15 +14,10 @@ movDct = {}
 for i in range(0, len(nbrsLst)):
     moves = 0
     for j in range(0, len(chkLst)):
-        numS = abs(chkLst[j]-i) #11
-        #print (nbrsLst[i])
-        #print (numS)
-
-        sumNum = int((numS * (numS+1))/2) #66
-        #print ("for these i and j:", i,chkLst[j], " the sum is: ", sumNum)
+        numS = abs(chkLst[j]-i)
+        sumNum = int((numS * (numS+1))/2)
         moves = moves + sumNum
     movDct[i] = moves
 
-#print (movDct)
 print (min(movDct.values()))
 
