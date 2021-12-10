@@ -62,7 +62,6 @@ def uniqNbr(someStr):
             elif (checker == 1):
                 returnDct[i] = 6
             else:
-
                 returnDct[i] = 9
         
 
