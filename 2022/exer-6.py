@@ -6,12 +6,7 @@ import string
 f = open("input-6", "r")
 
 allLst = f.read().splitlines()
-
-#print(len(allLst))
-
 firstOne = allLst[0]
-
-#print (firstOne[0])
 
 def chkInFour(list_of_4_chars):
     fir = list_of_4_chars[0]
@@ -22,7 +17,7 @@ def chkInFour(list_of_4_chars):
     else:
         return 1
 
-def chkInFourteen(list_of_14_chars):
+def chkInFourteen (list_of_14_chars):
     strtOfMsg = 0
     for idx in range(0, 14):
         coi = list_of_14_chars[idx]
@@ -36,8 +31,6 @@ for idx, char in enumerate(firstOne):
     tstLst = []
     for x in range(idx, idx+4):
         tstLst.append(firstOne[x])
-    #print (tstLst)
-    #print (chkInFour(tstLst))
     if chkInFour(tstLst):
         #print("found a match at: ", idx)
         break
@@ -53,8 +46,6 @@ for idx, char in enumerate(firstOne):
     tstLst = []
     for x in range(idx, idx+14):
         tstLst.append(firstOne[x])
-    #print (tstLst)
-    #print (chkInFour(tstLst))
     if (chkInFourteen(tstLst)==0):
         print("found a match at: ", idx)
         break
