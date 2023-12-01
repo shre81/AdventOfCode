@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import time
 
 #f = open("input-14-test", "r")
 f = open("input-14", "r")
@@ -94,13 +95,15 @@ def prunPoly(incPairsDct, lookupLst):
 
 # make an initial input dict
 inpPairsDct, incLastChar = genPairs(strtSeq)
+start_time = time.time()
 
 for i in range(0, 40):
-    if ( i % 5 == 0):
-        print ("at step :", i)
+    #if ( i % 5 == 0):
+    #    print ("at step :", i)
     opDct, chrCntr = prunPoly(inpPairsDct, smTx3)
     # pass
     inpPairsDct = opDct
     #incLastChar = chrCntr
 
 print(chrCntr)
+print("--- %s seconds ---" % (time.time() - start_time))
