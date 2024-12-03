@@ -1,8 +1,8 @@
 import os
 import re
 
-#f = open("input-1-test", "r")
-f = open("input-1", "r")
+f = open("input-1-test", "r")
+#f = open("input-1", "r")
 
 bigLst = []
 trckDct = {}
